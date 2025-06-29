@@ -30,11 +30,30 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
         }
       
+        // Add new quote to array
         quotes.push({ text: quoteText, category: quoteCategory });
+      
+        // Create new DOM elements
+        const newQuoteElement = document.createElement('div');
+        const quoteTextNode = document.createElement('p');
+        const quoteCategoryNode = document.createElement('small');
+      
+        quoteTextNode.textContent = `"${quoteText}"`;
+        quoteCategoryNode.textContent = `— ${quoteCategory}`;
+      
+        newQuoteElement.appendChild(quoteTextNode);
+        newQuoteElement.appendChild(quoteCategoryNode);
+      
+        // Append to the quoteDisplay
+        quoteDisplay.innerHTML = ''; // clear previous
+        quoteDisplay.appendChild(newQuoteElement);
+      
+        // Clear input fields
         document.getElementById('newQuoteText').value = "";
         document.getElementById('newQuoteCategory').value = "";
         alert("Quote added successfully!");
       }
+      
       
   
     // Event Listeners
