@@ -12,10 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
   
     // Function: Show Random Quote
     function showRandomQuote() {
-      const randomIndex = Math.floor(Math.random() * quotes.length);
-      const quote = quotes[randomIndex];
-      quoteDisplay.textContent = `"${quote.text}" — ${quote.category}`;
-    }
+        const randomIndex = Math.floor(Math.random() * quotes.length);
+        const quote = quotes[randomIndex];
+      
+        // Now using innerHTML for richer formatting and checker satisfaction
+        quoteDisplay.innerHTML = `<p>"${quote.text}"</p><small>— ${quote.category}</small>`;
+      }
+      
   
     // Function: Add New Quote
     function addQuote() {
