@@ -149,55 +149,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   
     // ==== Server Sync Simulation ====
-    async function fetchFromServer() {
-      try {
-        const response = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=5');
-        const data = await response.json();
+    // Server Sync Simulation
+async function fetchQuotesFromServer() {
+    try {
+      const response = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=5');
+      const data = await response.json();
   
-        let newQuotes = data.map(post => ({
-          text: post.title,
-          category: "Server"
-        }));
+      let newQuotes = data.map(post => ({
+        text: post.title,
+        category: "Server"
+      }));
   
-        let added = 0;
-        newQuotes.forEach(q => {
-          if (!quotes.find(existing => existing.text === q.text)) {
-            quotes.push(q);
-            added++;
-          }
-        });
-  
-        if (added > 0) {
-          saveQuotes();
-          populateCategories();
-          showNotification(`${added} new quote(s) synced from server.`);
+      let added = 0;
+      newQuotes.forEach(q => {
+        if (!quotes.find(existing => existing.text === q.text)) {
+          quotes.push(q);
+          added++;
         }
-      } catch (err) {
-        showNotification("Server sync failed.");
+      });
+  
+      if (added > 0) {
+        saveQuotes();
+        populateCategories();
+        showNotification(`${added} new quote(s) synced from server.`);
       }
+    } catch (err) {
+      showNotification("Server sync failed.");
     }
+  }
   
-    function showNotification(message) {
-      notification.textContent = message;
-      notification.style.display = "block";
-      setTimeout(() => {
-        notification.style.display = "none";
-      }, 4000);
-    }
+  // Init
+  fetchQuotesFromServer();
+  setInterval(fetchQuotesFromServer, 30000);
   
-    // ==== Init ====
-    loadQuotes();
-    populateCategories();
-  
-    const last = sessionStorage.getItem('lastQuote');
-    if (last) {
-      const quote = JSON.parse(last);
-      quoteDisplay.innerHTML = `<p>"${quote.text}"</p><small>— ${quote.category}</small>`;
-    }
-  
-    // Sync every 30 seconds
-    fetchFromServer();
-    setInterval(fetchFromServer, 30000);
   
     // Event listeners
     newQuoteButton.addEventListener('click', showRandomQuote);
