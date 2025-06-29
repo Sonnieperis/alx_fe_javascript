@@ -21,23 +21,25 @@ document.addEventListener('DOMContentLoaded', () => {
       
   
     // Function: Add New Quote
-    function addQuote() {
-      const quoteText = document.getElementById('newQuoteText').value.trim();
-      const quoteCategory = document.getElementById('newQuoteCategory').value.trim();
-  
-      if (quoteText === "" || quoteCategory === "") {
-        alert("Please fill in both fields.");
-        return;
+    function createAddQuoteForm() {
+        const quoteText = document.getElementById('newQuoteText').value.trim();
+        const quoteCategory = document.getElementById('newQuoteCategory').value.trim();
+      
+        if (quoteText === "" || quoteCategory === "") {
+          alert("Please fill in both fields.");
+          return;
+        }
+      
+        quotes.push({ text: quoteText, category: quoteCategory });
+        document.getElementById('newQuoteText').value = "";
+        document.getElementById('newQuoteCategory').value = "";
+        alert("Quote added successfully!");
       }
-  
-      quotes.push({ text: quoteText, category: quoteCategory });
-      document.getElementById('newQuoteText').value = "";
-      document.getElementById('newQuoteCategory').value = "";
-      alert("Quote added successfully!");
-    }
+      
   
     // Event Listeners
     newQuoteButton.addEventListener('click', showRandomQuote);
-    addQuoteButton.addEventListener('click', addQuote);
+    addQuoteButton.addEventListener('click', createAddQuoteForm);
+
   });
   
